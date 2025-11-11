@@ -65,10 +65,10 @@ const BASE_NAV: NavItem[] = [
     description: "Review automation-ready tasks",
   },
   {
-    label: "Git & CI",
+    label: "Delivery Console",
     href: "/delivery-console",
-    roles: ["admin", "developer"],
-    description: "Track commits, pipeline runs, deployment status",
+    roles: ["admin", "product-owner", "developer"],
+    description: "Manage Git automation & pipeline health",
   },
 ]
 

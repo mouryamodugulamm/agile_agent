@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { CircleCheck, Loader2, UploadCloud } from "lucide-react"
+import { CircleCheck, FileText, Info, Loader2, Sparkles, UploadCloud } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -25,6 +25,8 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 
+type Stage = "input" | "parsing" | "review"
+
 const MOCK_HISTORY = [
   {
     id: "doc-1",
@@ -39,10 +41,20 @@ const MOCK_HISTORY = [
     status: "Processed",
   },
 ]
+type StoryStatus = "To Do" | "In Progress" | "Done"
+type StoryRecord = {
+  id: string
+  title: string
+  description: string
+  acceptanceCriteria: string[]
+  points: number
+  tags: string[]
+  type: typeof STORY_TYPES[number]
+  status: StoryStatus
+  sprint: string | null
+}
 
-type Stage = "input" | "parsing" | "review"
-
-const MOCK_STORIES = [
+const MOCK_STORIES: StoryRecord[] = [
   {
     id: "story-1",
     title: "As a new user I want to register with email or social login",
@@ -53,8 +65,11 @@ const MOCK_STORIES = [
       "Google OAuth callback creates linked profile",
       "Registration captures preferred workspace role",
     ],
-    points: "5",
+    points: 5,
     tags: ["UI", "Backend"],
+    type: "Backend",
+    status: "In Progress",
+    sprint: "Sprint 08",
   },
   {
     id: "story-2",
@@ -66,10 +81,32 @@ const MOCK_STORIES = [
       "Approve sends story to backlog",
       "Discard removes feature from queue",
     ],
-    points: "3",
+    points: 3,
     tags: ["UI", "Bot-Automatable"],
+    type: "UI",
+    status: "To Do",
+    sprint: "Sprint 08",
+  },
+  {
+    id: "story-3",
+    title: "As an engineer I want automated smoke tests",
+    description:
+      "Bot executes regression suite after merges and reports to Slack with failure snapshots.",
+    acceptanceCriteria: [
+      "Bot runs smoke tests within 5 minutes of merge",
+      "Failures post summary and artifact link to #release channel",
+      "Retries happen automatically once",
+    ],
+    points: 8,
+    tags: ["automation", "quality"],
+    type: "Bot-automatable",
+    status: "To Do",
+    sprint: null,
   },
 ]
+
+const STATUSES: Array<"To Do" | "In Progress" | "Done"> = ["To Do", "In Progress", "Done"]
+const STORY_TYPES = ["UI", "Backend", "Bot-automatable"] as const
 
 export default function MvpIntakePage() {
   const [language, setLanguage] = useState("en")
@@ -124,8 +161,26 @@ export default function MvpIntakePage() {
     setStage(targetStage)
   }
 
+  const storyMetrics = useMemo(() => {
+    const total = MOCK_STORIES.length
+    const byStatus = STATUSES.reduce<Record<"To Do" | "In Progress" | "Done", number>>(
+      (acc, status) => {
+        acc[status] = MOCK_STORIES.filter((story) => story.status === status).length
+        return acc
+      },
+      { "To Do": 0, "In Progress": 0, Done: 0 }
+    )
+    const byType = STORY_TYPES.reduce<Record<string, number>>((acc, type) => {
+      acc[type] = MOCK_STORIES.filter((story) => story.type === type).length
+      return acc
+    }, {})
+    const unassigned = MOCK_STORIES.filter((story) => !story.sprint).length
+
+    return { total, byStatus, byType, unassigned }
+  }, [])
+
   return (
-    <main className="space-y-8">
+    <main className="space-y-8 pb-6 [scrollbar-width:thin] [scrollbar-color:theme(colors.primary/60)_theme(colors.slate.900/80)] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-slate-900/60 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-primary/60">
       <section className="space-y-4">
         <div className="flex flex-wrap items-center gap-3">
           <Badge className="rounded-full border border-primary/60 bg-primary/20 px-3 py-1 text-xs font-semibold text-primary-foreground">
@@ -266,6 +321,43 @@ export default function MvpIntakePage() {
                 </p>
               </div>
             </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-slate-800/70 bg-slate-950/60 p-4 text-xs text-slate-300 shadow-inner shadow-slate-950/40">
+                <div className="mb-2 flex items-center gap-2 text-white">
+                  <FileText className="size-4" />
+                  <span>Document guidelines</span>
+                </div>
+                <ul className="list-disc space-y-1 pl-4">
+                  <li>Capture objectives, personas, and key features in separate paragraphs.</li>
+                  <li>Explicitly note edge cases or compliance requirements.</li>
+                  <li>Highlight priorities using headings (“Must Have”, “Nice to Have”).</li>
+                </ul>
+              </div>
+              <div className="rounded-xl border border-slate-800/70 bg-slate-950/60 p-4 text-xs text-slate-300 shadow-inner shadow-slate-950/40">
+                <div className="mb-2 flex items-center gap-2 text-white">
+                  <Sparkles className="size-4 text-primary" />
+                  <span>Accelerate your first run</span>
+                </div>
+                <p className="mb-3">
+                  Try a curated brief or let the parser summarize your pasted content before submitting.
+                  You can always replace it with your own document later.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900"
+                  >
+                    Load sample brief
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900"
+                  >
+                    Summarize pasted text
+                  </Button>
+                </div>
+              </div>
+            </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-3 sm:flex-row sm:justify-between">
             <div className="text-xs text-slate-400">
@@ -331,6 +423,12 @@ export default function MvpIntakePage() {
             <p className="text-xs text-slate-400">
               Estimated time remaining: <span className="text-white">~45 seconds</span>
             </p>
+            <div className="rounded-lg border border-slate-800/70 bg-slate-950/60 px-3 py-2 text-xs text-slate-300">
+              <p className="flex items-center gap-2 text-white">
+                <Info className="size-3" />
+                Keep this window open to watch real-time updates or pause/cancel any time.
+              </p>
+            </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end">
             <Button
@@ -379,6 +477,23 @@ export default function MvpIntakePage() {
                 Tip: Edit any field inline. Approved stories will sync to the backlog with the latest values. Use “Merge” to consolidate overlapping narratives before publishing.
               </p>
             </div>
+          <div className="grid gap-3 sm:grid-cols-4">
+            <div className="rounded-lg border border-slate-800/70 bg-slate-950/60 px-3 py-2 shadow-inner shadow-slate-950/30">
+              <p className="text-xs text-slate-400">Total stories</p>
+              <p className="text-lg font-semibold text-white">{storyMetrics.total}</p>
+            </div>
+            {STATUSES.map((status) => (
+              <div
+                key={status}
+                className="rounded-lg border border-slate-800/70 bg-slate-950/60 px-3 py-2 shadow-inner shadow-slate-950/30"
+              >
+                <p className="text-xs text-slate-400">{status}</p>
+                <p className="text-lg font-semibold text-white">
+                  {storyMetrics.byStatus[status]}
+                </p>
+              </div>
+            ))}
+          </div>
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="space-y-1">
                 <Label htmlFor="filter-search" className="text-slate-200">
