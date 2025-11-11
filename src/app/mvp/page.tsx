@@ -292,7 +292,7 @@ export default function MvpIntakePage() {
                   </p>
                   <Button
                     variant="outline"
-                    className="mt-4 border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                    className="mt-4 border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                   >
                     Browse files
                   </Button>
@@ -345,13 +345,13 @@ export default function MvpIntakePage() {
                 <div className="flex flex-wrap gap-2">
                   <Button
                     variant="outline"
-                    className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900"
+                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-800/70"
                   >
                     Load sample brief
                   </Button>
                   <Button
                     variant="outline"
-                    className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900"
+                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-800/70"
                   >
                     Summarize pasted text
                   </Button>
@@ -366,7 +366,7 @@ export default function MvpIntakePage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-                className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+          className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
               >
                 Clear draft
               </Button>
@@ -433,13 +433,13 @@ export default function MvpIntakePage() {
           <CardFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end">
             <Button
               variant="outline"
-              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
             >
               Pause
             </Button>
             <Button
               variant="secondary"
-              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
               onClick={handleMarkParsingComplete}
             >
               Mark parsing complete
@@ -522,13 +522,13 @@ export default function MvpIntakePage() {
               <div className="flex flex-wrap items-end justify-end gap-2">
                 <Button
                   variant="secondary"
-                  className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                  className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                 >
                   Approve all
                 </Button>
                 <Button
                   variant="outline"
-                  className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                  className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                 >
                   Discard all
                 </Button>
@@ -588,7 +588,7 @@ export default function MvpIntakePage() {
                     ))}
                     <Button
                       variant="outline"
-                      className="w-fit border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-200 hover:bg-slate-900"
+                      className="w-fit border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-200 hover:bg-slate-800/70"
                     >
                       + Add criterion
                     </Button>
@@ -615,7 +615,7 @@ export default function MvpIntakePage() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:border-primary hover:bg-slate-900"
+                      className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:border-primary hover:bg-slate-800/70"
                     >
                       Merge
                     </Button>
@@ -637,7 +637,7 @@ export default function MvpIntakePage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-                className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
               >
                 Add custom story
               </Button>
@@ -651,7 +651,7 @@ export default function MvpIntakePage() {
 
       <div className="rounded-xl border border-slate-800/70 bg-slate-900/80 shadow-lg shadow-primary/10 backdrop-blur">
         <details className="group">
-          <summary className="flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-900/60 sm:px-6">
+          <summary className="flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800/70 sm:px-6">
             <span>Upload history</span>
             <Badge className="bg-slate-800/80 text-xs text-slate-200 group-open:bg-primary/30 group-open:text-primary-foreground">
               {MOCK_HISTORY.length} uploads
@@ -681,13 +681,13 @@ export default function MvpIntakePage() {
                   <div className="flex flex-wrap gap-2">
                     <Button
                       variant="secondary"
-                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900"
+                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-800/70"
                     >
                       View stories
                     </Button>
                     <Button
                       variant="outline"
-                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900"
+                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-800/70"
                     >
                       Re-run parsing
                     </Button>

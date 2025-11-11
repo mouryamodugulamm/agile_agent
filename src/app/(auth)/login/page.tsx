@@ -111,7 +111,7 @@ export default function LoginPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="border-slate-700/70 bg-slate-950/50 text-slate-200 shadow-sm transition hover:bg-slate-900"
+                  className="border-slate-700/70 bg-slate-950/50 text-slate-200 shadow-sm transition hover:bg-slate-800/70"
                   onClick={() =>
                     setError(
                       "Google sign-in is coming soon. Connect your OAuth provider in the integrations step."
@@ -124,7 +124,7 @@ export default function LoginPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="border-slate-700/70 bg-slate-950/50 text-slate-200 shadow-sm transition hover:bg-slate-900"
+                  className="border-slate-700/70 bg-slate-950/50 text-slate-200 shadow-sm transition hover:bg-slate-800/70"
                   onClick={() =>
                     setError(
                       "GitHub sign-in is not configured yet. Add client credentials to enable it."

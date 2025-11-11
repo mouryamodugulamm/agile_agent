@@ -424,7 +424,7 @@ export default function ScrumBoardPage() {
               Drag cards to update status instantly — teammates will see the changes in real time.
             </span>
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                 Collapse columns
               </Button>
               <Button className="border border-primary/40 bg-primary/70 text-white hover:bg-primary">
@@ -469,7 +469,7 @@ export default function ScrumBoardPage() {
             <div className="rounded-2xl border border-slate-800/70 bg-slate-950/60 p-6 text-xs text-slate-300 shadow-inner shadow-slate-950/40">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-sm font-semibold text-white">Sprint burndown</p>
-                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                   Export chart
                 </Button>
               </div>
@@ -507,7 +507,7 @@ export default function ScrumBoardPage() {
               <div className="space-y-3 rounded-2xl border border-slate-800/70 bg-slate-950/60 p-4 text-xs text-slate-300 shadow-inner shadow-slate-950/40">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold text-white">Assign stories to sprint</p>
-                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                     Repeat sprint template
                   </Button>
                 </div>
@@ -529,10 +529,10 @@ export default function ScrumBoardPage() {
                 <Button className="border border-primary/40 bg-primary/70 text-white hover:bg-primary">
                   Start sprint
                 </Button>
-                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                   Archive completed sprint
                 </Button>
-                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                   Notify team
                 </Button>
               </div>
@@ -540,7 +540,7 @@ export default function ScrumBoardPage() {
           </CardContent>
           <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
             <span>Capacity planning tools help balance workload across teams.</span>
-            <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+            <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
               View team availability
             </Button>
           </CardFooter>
@@ -612,7 +612,7 @@ export default function ScrumBoardPage() {
                     placeholder="Share status updates, blockers, or next steps..."
                     className="w-full rounded-xl border border-slate-800/80 bg-slate-950/70 p-3 text-xs text-slate-100 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/40"
                   />
-                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                     <MessageSquarePlus className="mr-2 size-4" />
                     Add comment
                   </Button>
@@ -640,13 +640,13 @@ export default function ScrumBoardPage() {
                   Quick actions
                 </p>
                 <div className="mt-3 grid gap-2">
-                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                     @mention teammate
                   </Button>
-                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                     Upload attachment
                   </Button>
-                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                  <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                     View audit log
                   </Button>
                 </div>
@@ -655,7 +655,7 @@ export default function ScrumBoardPage() {
           </CardContent>
           <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
             <span>All updates are synced instantly. Archives remain searchable for future audits.</span>
-            <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+            <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
               Archive story
             </Button>
           </CardFooter>

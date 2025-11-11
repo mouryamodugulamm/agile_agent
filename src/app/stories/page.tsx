@@ -175,7 +175,7 @@ export default function StoryStudioPage() {
                 </Select>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+                <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                   Bulk assign
                 </Button>
                 <Button className="border border-primary/50 bg-primary/70 text-white hover:bg-primary">
@@ -192,7 +192,7 @@ export default function StoryStudioPage() {
                   setSelectedStoryId(story.id)
                   setActiveTab("detail")
                 }}
-                className="w-full rounded-2xl border border-slate-800/70 bg-slate-950/60 p-4 text-left shadow-inner shadow-slate-950/40 transition hover:border-primary/40 hover:bg-slate-900/70"
+                className="w-full rounded-2xl border border-slate-800/70 bg-slate-950/60 p-4 text-left shadow-inner shadow-slate-950/40 transition hover:border-primary/40 hover:bg-slate-800/70"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="space-y-1">
@@ -217,10 +217,10 @@ export default function StoryStudioPage() {
           <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
             <span>Showing {filteredStories.length} of {MOCK_STORIES.length} stories</span>
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-800/70">
                 Previous
               </Button>
-              <Button className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-900">
+              <Button className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-100 hover:bg-slate-800/70">
                 Next
               </Button>
             </div>
@@ -284,7 +284,7 @@ export default function StoryStudioPage() {
                     />
                     <Button
                       variant="outline"
-                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-200 hover:bg-slate-900"
+                      className="border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs text-slate-200 hover:bg-slate-800/70"
                     >
                       + Add criterion
                     </Button>
@@ -339,7 +339,7 @@ export default function StoryStudioPage() {
           </CardContent>
           <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                 Duplicate story
               </Button>
               <Button variant="destructive" className="bg-rose-600/80 hover:bg-rose-600">
@@ -444,7 +444,7 @@ export default function StoryStudioPage() {
                 {STORY_TEMPLATES.map((template) => (
                   <button
                     key={template.title}
-                    className="w-full rounded-lg border border-slate-800/70 bg-slate-900/70 px-3 py-2 text-left text-xs transition hover:border-primary/40 hover:bg-slate-900/80"
+                    className="w-full rounded-lg border border-slate-800/70 bg-slate-900/70 px-3 py-2 text-left text-xs transition hover:border-primary/40 hover:bg-slate-800/80"
                   >
                     <p className="font-medium text-slate-200">{template.title}</p>
                     <p className="text-slate-400">{template.description}</p>
@@ -456,7 +456,7 @@ export default function StoryStudioPage() {
           <CardFooter className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
             <span>All mandatory fields must be populated before saving.</span>
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                 Reset form
               </Button>
               <Button className="border border-primary/40 bg-primary/70 text-white hover:bg-primary">
@@ -547,7 +547,7 @@ export default function StoryStudioPage() {
             <span>
               Track sprint burndown by syncing story statuses in realtime with the scrum board.
             </span>
-            <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+            <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
               View scrum board
             </Button>
           </CardFooter>

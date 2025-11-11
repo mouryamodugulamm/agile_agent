@@ -364,7 +364,7 @@ export default function DeliveryConsolePage() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                      className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                     >
                       View validation logs
                     </Button>
@@ -382,7 +382,7 @@ export default function DeliveryConsolePage() {
             </CardContent>
             <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
               <span>Changes save locally — future backend integration will persist settings across sessions.</span>
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                 Export config JSON
               </Button>
             </CardFooter>
@@ -435,14 +435,14 @@ export default function DeliveryConsolePage() {
                           <div className="mt-2 flex flex-wrap gap-2">
                             <Button
                               variant="outline"
-                              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                             >
                               <Link2 className="mr-2 size-4" />
                               View in Git
                             </Button>
                             <Button
                               variant="outline"
-                              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                             >
                               <TerminalSquare className="mr-2 size-4" />
                               View diff
@@ -453,10 +453,10 @@ export default function DeliveryConsolePage() {
                           <p className="text-slate-200">Build pipeline</p>
                           <p className="text-sm font-semibold text-white">Run {story.pipelineId}</p>
                           <div className="mt-2 flex flex-wrap gap-2">
-                            <Button
-                              variant="outline"
-                              className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
-                            >
+                        <Button
+                          variant="outline"
+                          className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                        >
                               <ServerCog className="mr-2 size-4" />
                               View logs
                             </Button>
@@ -503,7 +503,7 @@ export default function DeliveryConsolePage() {
             </CardContent>
             <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
               <span>Automation events sync in near real-time — future integrations will replace mock data.</span>
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                 Subscribe to pipeline alerts
               </Button>
             </CardFooter>
@@ -577,7 +577,7 @@ export default function DeliveryConsolePage() {
                 </Select>
                 <Button
                   variant="outline"
-                  className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                  className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                 >
                   <History className="mr-2 size-4" />
                   Last 24h
@@ -613,17 +613,17 @@ export default function DeliveryConsolePage() {
                       <span className="rounded-full border border-slate-700 bg-slate-900/60 px-2 py-1">
                         Duration {job.duration}
                       </span>
-                      <Button
-                        variant="outline"
-                        className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
-                      >
+                        <Button
+                          variant="outline"
+                          className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                        >
                         <TerminalSquare className="mr-2 size-4" />
                         Inspect logs
                       </Button>
-                      <Button
-                        variant="outline"
-                        className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
-                      >
+                        <Button
+                          variant="outline"
+                          className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                        >
                         <Bot className="mr-2 size-4" />
                         Open deployment
                       </Button>
@@ -634,7 +634,7 @@ export default function DeliveryConsolePage() {
             </CardContent>
             <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
               <span>Hook into your provider webhooks to replace mock data with live build telemetry.</span>
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                 Download build report (CSV)
               </Button>
             </CardFooter>

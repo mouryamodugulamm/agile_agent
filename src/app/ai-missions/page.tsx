@@ -470,7 +470,7 @@ export default function AiMissionsPage() {
                       </Button>
                       <Button
                         variant="outline"
-                        className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
+                        className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
                       >
                         View latest results
                       </Button>
@@ -545,10 +545,10 @@ export default function AiMissionsPage() {
                         <p className="text-xs text-slate-400">Story ID: {selectedStory.id}</p>
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        <Button
-                          variant="outline"
-                          className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
-                        >
+                          <Button
+                            variant="outline"
+                            className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                          >
                           Request status update
                         </Button>
                         <Button
@@ -669,10 +669,10 @@ export default function AiMissionsPage() {
                       </p>
                     </div>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <Button
-                        variant="outline"
-                        className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900"
-                      >
+                        <Button
+                          variant="outline"
+                          className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                        >
                         View history
                       </Button>
                       <Button className="border border-primary/40 bg-primary/70 text-white hover:bg-primary">
@@ -725,7 +725,7 @@ export default function AiMissionsPage() {
             </CardContent>
             <CardFooter className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
               <span>Stay ahead of AI capacity — re-balance workloads before the backlog spikes.</span>
-              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-900">
+              <Button variant="outline" className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70">
                 Export agent analytics
               </Button>
             </CardFooter>

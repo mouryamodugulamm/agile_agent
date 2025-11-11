@@ -195,7 +195,7 @@ export function AppShell({ children }: AppShellProps) {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="border-slate-700 bg-slate-950/60 text-slate-200 hover:bg-slate-900"
+                  className="border-slate-700 bg-slate-950/60 text-slate-200 hover:bg-slate-800/70"
                 >
                   <Menu className="size-4" />
                 </Button>

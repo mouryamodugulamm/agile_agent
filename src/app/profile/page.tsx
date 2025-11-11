@@ -300,7 +300,7 @@ export default function ProfilePage() {
                   <Button
                     variant="secondary"
                     onClick={handleSessionRefresh}
-                    className="w-full justify-center border border-slate-700 bg-slate-950/60 text-slate-100 hover:bg-slate-900"
+                    className="w-full justify-center border border-slate-700 bg-slate-950/60 text-slate-100 hover:bg-slate-800/70"
                   >
                     Refresh tokens
                   </Button>
