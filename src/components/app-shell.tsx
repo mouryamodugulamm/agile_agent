@@ -1,14 +1,15 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   ChevronDown,
   ChevronUp,
+  Loader2,
   Menu,
   UserCircle2,
 } from "lucide-react"
-import { ReactNode, useMemo, useState } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -83,8 +84,59 @@ const ADMIN_NAV: NavItem[] = [
 
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const router = useRouter()
+  const { user, logout, isLoading } = useAuth()
   const [showNav, setShowNav] = useState(true)
+
+  const publicRoutes = useMemo(() => ["/", "/login", "/register", "/forgot-password"], [])
+  const authOnlyRoutes = useMemo(() => ["/login", "/register", "/forgot-password"], [])
+
+  const isPublicRoute = useMemo(() => {
+    return publicRoutes.some((route) =>
+      route === "/" ? pathname === route : pathname.startsWith(route)
+    )
+  }, [pathname, publicRoutes])
+
+  useEffect(() => {
+    if (isLoading) {
+      return
+    }
+
+    if (!user && !isPublicRoute && pathname !== "/login") {
+      router.replace("/login")
+      return
+    }
+
+    if (
+      user &&
+      authOnlyRoutes.some((route) => pathname.startsWith(route)) &&
+      pathname !== "/"
+    ) {
+      router.replace("/")
+    }
+  }, [authOnlyRoutes, isLoading, isPublicRoute, pathname, router, user])
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-100">
+        <div className="flex items-center gap-2 rounded-lg border border-slate-800/60 bg-slate-900/60 px-4 py-3 text-sm text-slate-300 shadow-inner">
+          <Loader2 className="size-4 animate-spin text-white" />
+          Verifying session…
+        </div>
+      </div>
+    )
+  }
+
+  if (!user && !isPublicRoute) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-100">
+        <div className="flex items-center gap-2 rounded-lg border border-slate-800/60 bg-slate-900/60 px-4 py-3 text-sm text-slate-300 shadow-inner">
+          <Loader2 className="size-4 animate-spin text-white" />
+          Redirecting to sign in…
+        </div>
+      </div>
+    )
+  }
 
   if (!user) {
     return <div className="min-h-screen">{children}</div>
