@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import {
   ArrowRight,
@@ -23,6 +22,7 @@ import {
 } from "@/components/ui/card"
 import { useAuth } from "@/contexts/auth-context"
 import type { UserRole } from "@/lib/auth-storage"
+import { BrandLogo } from "@/components/brand-logo"
 
 const ROLE_LABELS: Record<UserRole, string> = {
   admin: "Admin",
@@ -53,9 +53,7 @@ export default function Home() {
           <header className="px-6 py-8 sm:px-12">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <Link href="/" className="flex items-center gap-3 text-left">
-                <span className="rounded-full border border-slate-700/80 bg-slate-950/60 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-400">
-                  Agile Agent
-                </span>
+                <BrandLogo className="text-white text-lg sm:text-xl" accentClassName="text-rose-500" />
                 <span className="text-xs text-slate-500">
                   Product orchestration for teams of humans and AI agents
                 </span>
@@ -91,7 +89,7 @@ export default function Home() {
                 <Button asChild size="lg" className="gap-2 px-8 text-sm font-medium shadow-lg shadow-primary/30 hover:shadow-primary/45">
                   <Link href="/register">
                     Start free workspace
-                    <ArrowRight className="size-4" />
+                    <ArrowRight className="size-4 text-white" />
                   </Link>
                 </Button>
                 <Button

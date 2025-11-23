@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/sheet"
 import { useAuth } from "@/contexts/auth-context"
 import type { UserRole } from "@/lib/auth-storage"
+import { BrandLogo } from "@/components/brand-logo"
 
 type AppShellProps = {
   children: ReactNode
@@ -197,7 +198,7 @@ export function AppShell({ children }: AppShellProps) {
                   size="icon"
                   className="border-slate-700 bg-slate-950/60 text-slate-200 hover:bg-slate-800/70"
                 >
-                  <Menu className="size-4" />
+                  <Menu className="size-4 text-white" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-72 border-slate-800 bg-slate-900 text-slate-100">
@@ -208,9 +209,7 @@ export function AppShell({ children }: AppShellProps) {
               </SheetContent>
             </Sheet>
             <Link href="/" className="flex flex-col">
-              <span className="text-sm font-semibold uppercase tracking-wide text-white">
-                Agile Agent
-              </span>
+              <BrandLogo className="text-white" />
               <span className="text-xs text-slate-300">
                 AI-driven story writing & delivery
               </span>
@@ -226,7 +225,7 @@ export function AppShell({ children }: AppShellProps) {
               className="hidden h-8 w-8 text-slate-300 hover:bg-slate-800/70 lg:flex"
               onClick={() => setShowNav((prev) => !prev)}
             >
-              {showNav ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+              {showNav ? <ChevronUp className="size-4 text-white" /> : <ChevronDown className="size-4 text-white" />}
             </Button>
           </div>
 
@@ -236,7 +235,7 @@ export function AppShell({ children }: AppShellProps) {
                 variant="ghost"
                 className="flex items-center gap-2 px-2 text-slate-100 hover:bg-slate-800/70"
               >
-                <UserCircle2 className="size-6" />
+                <UserCircle2 className="size-6 text-white" />
                 <div className="hidden text-left text-xs leading-tight sm:block">
                   <span className="block font-medium text-white">
                     {user?.name ?? "Unknown"}

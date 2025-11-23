@@ -516,7 +516,7 @@ export default function AiMissionsPage() {
                           </p>
                         </div>
                         <Badge className={cn("flex items-center gap-1 text-[11px]", STATUS_VARIANTS[story.status].badgeClass)}>
-                          <StatusIcon className="size-3" />
+                          <StatusIcon className="size-3 text-white" />
                           {STATUS_VARIANTS[story.status].label}
                         </Badge>
                       </div>
@@ -609,7 +609,7 @@ export default function AiMissionsPage() {
                   </>
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-                    <Bot className="size-8 text-slate-600" />
+                    <Bot className="size-8 text-white" />
                     <p className="text-sm text-slate-400">Select a story card to inspect active assignment details.</p>
                   </div>
                 )}
@@ -695,7 +695,7 @@ export default function AiMissionsPage() {
                 </div>
                 <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-rose-100">
                   <p className="flex items-center gap-2 text-sm font-semibold">
-                    <AlertTriangle className="size-4" />
+                    <AlertTriangle className="size-4 text-white" />
                     Alert feed
                   </p>
                   <div className="mt-3 space-y-2 text-xs">
@@ -712,7 +712,7 @@ export default function AiMissionsPage() {
                 </div>
                 <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-100">
                   <p className="flex items-center gap-2 text-sm font-semibold">
-                    <CheckCircle2 className="size-4" />
+                    <CheckCircle2 className="size-4 text-white" />
                     Recent wins
                   </p>
                   <div className="mt-3 space-y-2 text-xs">

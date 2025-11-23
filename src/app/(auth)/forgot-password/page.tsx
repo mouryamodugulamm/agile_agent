@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/contexts/auth-context"
+import { BrandLogo } from "@/components/brand-logo"
 
 type Step = "request" | "reset" | "done"
 
@@ -165,6 +166,7 @@ export default function ForgotPasswordPage() {
         <div className="w-full max-w-xl">
           <Card className="border-none bg-slate-900/90 text-slate-100 shadow-2xl backdrop-blur-lg">
             <CardHeader className="space-y-2">
+              <BrandLogo className="text-white text-xl" accentClassName="text-rose-500" />
               <div className="flex items-center gap-2 text-sm font-medium text-white">
                 <KeyRound className="size-4 text-white" />
                 Reset password

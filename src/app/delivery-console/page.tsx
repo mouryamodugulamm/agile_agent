@@ -354,7 +354,7 @@ export default function DeliveryConsolePage() {
                       Pipeline webhook active (GitHub Actions)
                     </p>
                     <p className="flex items-center gap-2 text-amber-200">
-                      <AlertTriangle className="size-4" />
+                      <AlertTriangle className="size-4 text-white" />
                       Deployment previews paused (manual review)
                     </p>
                   </div>
@@ -422,7 +422,7 @@ export default function DeliveryConsolePage() {
                         </p>
                       </div>
                       <Badge className={cn("flex items-center gap-1 text-[11px]", badgeMeta.className)}>
-                        <StatusIcon className="size-3" />
+                        <StatusIcon className="size-3 text-white" />
                         {badgeMeta.label}
                       </Badge>
                     </div>

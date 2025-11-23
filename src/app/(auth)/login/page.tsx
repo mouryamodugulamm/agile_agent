@@ -32,6 +32,7 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { useAuth } from "@/contexts/auth-context"
+import { BrandLogo } from "@/components/brand-logo"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -77,28 +78,28 @@ export default function LoginPage() {
   return (
     <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900">
       <div className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
-        <div className="flex w-full max-w-5xl flex-col gap-10 lg:flex-row">
-          <Card className="border-none bg-slate-900/90 text-slate-100 shadow-2xl backdrop-blur-lg lg:w-[440px]">
-            <CardHeader className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-white">
-                <LogIn className="size-4 text-white" />
-                Sign in
-              </div>
-              <CardTitle className="text-3xl font-semibold text-white">
-                Welcome back
-              </CardTitle>
-              <CardDescription className="text-slate-100">
-                Enter your credentials to access the Agile Agent workspace.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+        <Card className="w-full max-w-xl border-none bg-slate-900/90 text-slate-100 shadow-2xl backdrop-blur-lg">
+          <CardHeader className="space-y-3">
+            <BrandLogo className="text-white text-xl" accentClassName="text-rose-500" />
+            <div className="flex items-center gap-2 text-sm font-medium text-white">
+              <LogIn className="size-4 text-white" />
+              Sign in
+            </div>
+            <CardTitle className="text-3xl font-semibold text-white">
+              Welcome back
+            </CardTitle>
+            <CardDescription className="text-slate-100">
+              Enter your credentials to access the Agile Agent workspace.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
               {error ? (
                 <Alert
                   variant="destructive"
                   className="border-red-500/60 bg-red-500/10 text-red-100"
                 >
                   <AlertTitle className="flex items-center gap-2 text-red-100">
-                    <AlertCircle className="size-4" />
+                    <AlertCircle className="size-4 text-white" />
                     Login failed
                   </AlertTitle>
                   <AlertDescription className="text-red-200">
@@ -276,55 +277,8 @@ export default function LoginPage() {
                   <ArrowRight className="ml-2 size-4" />
                 </Button>
               </form>
-            </CardContent>
-          </Card>
-
-          <div className="border-slate-800/70 bg-slate-900/70 text-slate-100 flex-1 rounded-3xl border p-10 backdrop-blur-lg">
-            <div className="max-w-md space-y-8 text-left">
-              <div>
-                <h2 className="text-3xl font-semibold tracking-tight text-white">
-                  Build and ship with confidence
-                </h2>
-                <p className="mt-3 text-slate-200">
-                  Agile Agent keeps product owners, engineers, and AI teammates
-                  aligned with a unified backlog, sprint board, and automated
-                  delivery checks.
-                </p>
-              </div>
-
-              <div className="grid gap-6 text-sm text-slate-200">
-                <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                  <p className="font-medium text-white">Account security</p>
-                  <p className="mt-2 text-slate-200">
-                    Multi-factor prompts and CAPTCHA help protect access until we
-                    wire up production-grade identity services.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                  <p className="font-medium text-white">Story intelligence</p>
-                  <p className="mt-2 text-slate-200">
-                    Generate refined user stories with acceptance criteria in
-                    seconds and let AI suggest effort sizing.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                  <p className="font-medium text-white">Connected delivery</p>
-                  <p className="mt-2 text-slate-200">
-                    Sync progress with Git, trigger pipelines, and surface build
-                    health without leaving the board.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                  <p className="font-medium text-white">Secure access</p>
-                  <p className="mt-2 text-slate-200">
-                    Role-aware controls, MFA, and audit trails keep every team
-                    member on the right track.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

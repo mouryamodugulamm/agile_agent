@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/contexts/auth-context"
 import type { UserRole } from "@/lib/auth-storage"
+import { BrandLogo } from "@/components/brand-logo"
 
 const ROLE_OPTIONS: Array<{ value: UserRole; label: string; description: string }> =
   [
@@ -91,22 +92,22 @@ export default function RegisterPage() {
   return (
     <div className="bg-gradient-to-br from-indigo-900 via-slate-950 to-slate-900">
       <div className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
-        <div className="flex w-full max-w-5xl flex-col gap-10 lg:flex-row">
-          <Card className="border-none bg-slate-900/90 text-slate-100 shadow-2xl backdrop-blur-lg lg:w-[460px]">
-            <CardHeader className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium text-white">
-                <UserPlus className="size-4 text-white" />
-                Create account
-              </div>
-              <CardTitle className="text-3xl font-semibold text-white">
-                Join Agile Agent
-              </CardTitle>
-              <CardDescription className="text-slate-100">
-                Register your workspace profile to start planning and shipping
-                with AI support.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+        <Card className="w-full max-w-xl border-none bg-slate-900/90 text-slate-100 shadow-2xl backdrop-blur-lg">
+          <CardHeader className="space-y-3">
+            <BrandLogo className="text-white text-xl" accentClassName="text-rose-500" />
+            <div className="flex items-center gap-2 text-sm font-medium text-white">
+              <UserPlus className="size-4 text-white" />
+              Create account
+            </div>
+            <CardTitle className="text-3xl font-semibold text-white">
+              Join Agile Agent
+            </CardTitle>
+            <CardDescription className="text-slate-100">
+              Register your workspace profile to start planning and shipping
+              with AI support.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
               {error ? (
                 <Alert
                   variant="destructive"
@@ -257,61 +258,8 @@ export default function RegisterPage() {
                   Sign in
                 </Link>
               </p>
-            </CardContent>
-          </Card>
-
-          <div className="border-slate-800/70 bg-slate-900/70 text-slate-100 flex-1 rounded-3xl border p-10 backdrop-blur-lg">
-              <div className="grid gap-6 text-sm text-slate-200">
-              <div>
-                <h2 className="text-3xl font-semibold tracking-tight text-white">
-                  What you get
-                </h2>
-                <p className="mt-3 text-slate-200">
-                  Centralize your backlog, generate stories in seconds, and keep
-                  delivery flowing with intelligent automation.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                <p className="font-medium text-white">Plan every sprint</p>
-                <p className="mt-2 text-slate-200">
-                  Drag-and-drop stories through backlog, doing, testing, and
-                  done with real-time updates.
-                </p>
-              </div>
-                <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                  <p className="font-medium text-white">Permissions</p>
-                  <ul className="mt-2 space-y-1 text-left text-slate-200">
-                    <li>
-                      <span className="font-medium text-white">Admin:</span> Full access.
-                    </li>
-                    <li>
-                      <span className="font-medium text-white">Product Owner:</span> Story and sprint management.
-                    </li>
-                    <li>
-                      <span className="font-medium text-white">Developer:</span> Story updates, commenting.
-                    </li>
-                    <li>
-                      <span className="font-medium text-white">AI Agent:</span> Automated tasks.
-                    </li>
-                  </ul>
-                </div>
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                <p className="font-medium text-white">Work with AI teammates</p>
-                <p className="mt-2 text-slate-200">
-                  Assign bot-ready tasks to autonomous agents with execution
-                  tracking and human oversight.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 px-5 py-4 shadow-inner">
-                <p className="font-medium text-white">Ship with confidence</p>
-                <p className="mt-2 text-slate-200">
-                  Git-integrated workflows, commit automation, and CI/CD status
-                  checks keep everyone aligned.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

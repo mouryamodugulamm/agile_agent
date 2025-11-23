@@ -113,6 +113,10 @@ export default function MvpIntakePage() {
   const [activeTab, setActiveTab] = useState("drafts")
   const [stage, setStage] = useState<Stage>("input")
   const [stepError, setStepError] = useState<string | null>(null)
+  const [mvpText, setMvpText] = useState("")
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [validationError, setValidationError] = useState<string | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
   const storyCount = useMemo(() => MOCK_STORIES.length, [])
 
@@ -143,6 +147,21 @@ export default function MvpIntakePage() {
   const handleSubmitForParsing = () => {
     if (stage !== "input") return
     setStepError(null)
+    setValidationError(null)
+
+    // Validate based on active tab
+    if (activeTab === "drafts") {
+      if (!mvpText.trim() || mvpText.trim().length < 250) {
+        setValidationError("At least 250 characters are required in the MVP draft text.")
+        return
+      }
+    } else if (activeTab === "uploads") {
+      if (uploadedFiles.length === 0) {
+        setValidationError("Please upload at least one file.")
+        return
+      }
+    }
+
     setStage("parsing")
   }
 
@@ -159,6 +178,40 @@ export default function MvpIntakePage() {
     }
     setStepError(null)
     setStage(targetStage)
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+
+    const files = Array.from(e.dataTransfer.files).filter((file) => {
+      const ext = file.name.split(".").pop()?.toLowerCase()
+      return ext === "txt" || ext === "docx" || ext === "pdf"
+    })
+
+    if (files.length > 0) {
+      setUploadedFiles([...uploadedFiles, ...files])
+      setValidationError(null)
+    }
+  }
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    setUploadedFiles([...uploadedFiles, ...files])
+    setValidationError(null)
   }
 
   const storyMetrics = useMemo(() => {
@@ -228,7 +281,7 @@ export default function MvpIntakePage() {
                         : "border-slate-700 bg-slate-800/80 text-slate-300"
                     )}
                   >
-                    {isDone ? <CircleCheck className="size-4" /> : index + 1}
+                    {isDone ? <CircleCheck className="size-4 text-white" /> : index + 1}
                   </span>
                   <p className="text-sm font-semibold text-white">{step.label}</p>
                 </div>
@@ -253,7 +306,10 @@ export default function MvpIntakePage() {
             </CardDescription>
             <Tabs
               value={activeTab}
-              onValueChange={(value) => setActiveTab(value)}
+              onValueChange={(value) => {
+                setActiveTab(value)
+                setValidationError(null)
+              }}
               className="w-full"
             >
               <TabsList className="grid w-full grid-cols-2 rounded-xl bg-slate-800/50 p-1">
@@ -279,23 +335,108 @@ export default function MvpIntakePage() {
                     id="mvp-text"
                     rows={10}
                     placeholder="Paste executive summary, success criteria, feature outline..."
+                    value={mvpText}
+                    onChange={(e) => {
+                      setMvpText(e.target.value)
+                      setValidationError(null)
+                    }}
                     className="w-full rounded-xl border border-slate-800/80 bg-slate-950/60 p-4 text-sm text-slate-100 placeholder:text-slate-500 focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/40"
                   />
+                  <p className="text-xs text-slate-400">
+                    {mvpText.length}/250 characters minimum
+                  </p>
                 </div>
               </TabsContent>
               <TabsContent value="uploads" className="space-y-4">
-                <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-700 bg-slate-950/50 p-6 text-center text-slate-300">
-                  <UploadCloud className="mb-3 size-8 text-white" />
-                  <p className="text-sm text-white">Drag & drop your MVP document</p>
-                  <p className="text-xs text-slate-400">
-                    Supported formats: .txt, .docx, .pdf (max 10 MB)
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="mt-4 border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
-                  >
-                    Browse files
-                  </Button>
+                <div
+                  className={cn(
+                    "rounded-2xl border border-dashed p-6 transition-colors",
+                    isDragging
+                      ? "border-primary/60 bg-primary/10"
+                      : "border-slate-700 bg-slate-950/50"
+                  )}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  {uploadedFiles.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center text-center text-slate-300">
+                      <UploadCloud className="mb-3 size-8 text-white" />
+                      <p className="text-sm text-white">Drag & drop your MVP document</p>
+                      <p className="text-xs text-slate-400">
+                        Supported formats: .txt, .docx, .pdf (max 10 MB)
+                      </p>
+                      <input
+                        type="file"
+                        id="file-upload"
+                        multiple
+                        accept=".txt,.docx,.pdf"
+                        className="hidden"
+                        onChange={handleFileSelect}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="mt-4 border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                        onClick={() => document.getElementById("file-upload")?.click()}
+                      >
+                        Browse files
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <FileText className="size-5 text-white" />
+                          <Label className="text-slate-200">Uploaded files ({uploadedFiles.length})</Label>
+                        </div>
+                        <input
+                          type="file"
+                          id="file-upload"
+                          multiple
+                          accept=".txt,.docx,.pdf"
+                          className="hidden"
+                          onChange={handleFileSelect}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="border border-slate-700 bg-slate-950/70 text-xs text-slate-100 hover:bg-slate-800/70"
+                          onClick={() => document.getElementById("file-upload")?.click()}
+                        >
+                          Add more files
+                        </Button>
+                      </div>
+                      <div className="space-y-2">
+                        {uploadedFiles.map((file, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between gap-3 rounded-lg border border-slate-800/70 bg-slate-900/60 px-3 py-2.5 text-sm text-slate-200 transition hover:bg-slate-900/80"
+                          >
+                            <div className="flex items-center gap-2 flex-1 min-w-0">
+                              <FileText className="size-4 text-white flex-shrink-0" />
+                              <span className="truncate text-white">{file.name}</span>
+                              <span className="text-xs text-slate-400 flex-shrink-0">
+                                ({(file.size / 1024).toFixed(1)} KB)
+                              </span>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 flex-shrink-0"
+                              onClick={() => {
+                                setUploadedFiles(uploadedFiles.filter((_, i) => i !== index))
+                              }}
+                            >
+                              ×
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </TabsContent>
             </Tabs>
@@ -324,7 +465,7 @@ export default function MvpIntakePage() {
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-xl border border-slate-800/70 bg-slate-950/60 p-4 text-xs text-slate-300 shadow-inner shadow-slate-950/40">
                 <div className="mb-2 flex items-center gap-2 text-white">
-                  <FileText className="size-4" />
+                  <FileText className="size-4 text-white" />
                   <span>Document guidelines</span>
                 </div>
                 <ul className="list-disc space-y-1 pl-4">
@@ -335,7 +476,7 @@ export default function MvpIntakePage() {
               </div>
               <div className="rounded-xl border border-slate-800/70 bg-slate-950/60 p-4 text-xs text-slate-300 shadow-inner shadow-slate-950/40">
                 <div className="mb-2 flex items-center gap-2 text-white">
-                  <Sparkles className="size-4 text-primary" />
+                  <Sparkles className="size-4 text-white" />
                   <span>Accelerate your first run</span>
                 </div>
                 <p className="mb-3">
@@ -358,6 +499,14 @@ export default function MvpIntakePage() {
                 </div>
               </div>
             </div>
+            {validationError && (
+              <div className="rounded-lg border border-rose-500/60 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+                <p className="flex items-center gap-2">
+                  <Info className="size-4 text-white" />
+                  {validationError}
+                </p>
+              </div>
+            )}
           </CardContent>
           <CardFooter className="flex flex-col gap-3 sm:flex-row sm:justify-between">
             <div className="text-xs text-slate-400">
@@ -366,12 +515,17 @@ export default function MvpIntakePage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-          className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                className="border border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800/70"
+                onClick={() => {
+                  setMvpText("")
+                  setUploadedFiles([])
+                  setValidationError(null)
+                }}
               >
                 Clear draft
               </Button>
               <Button
-                className="shadow-lg shadow-primary/25"
+                className="cursor-pointer border border-primary/40 bg-primary/70 text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary hover:shadow-primary/50"
                 onClick={handleSubmitForParsing}
               >
                 Submit for parsing
@@ -425,7 +579,7 @@ export default function MvpIntakePage() {
             </p>
             <div className="rounded-lg border border-slate-800/70 bg-slate-950/60 px-3 py-2 text-xs text-slate-300">
               <p className="flex items-center gap-2 text-white">
-                <Info className="size-3" />
+                <Info className="size-3 text-white" />
                 Keep this window open to watch real-time updates or pause/cancel any time.
               </p>
             </div>
