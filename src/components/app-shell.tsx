@@ -26,7 +26,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/clerk-auth-context"
 import type { UserRole } from "@/lib/auth-storage"
 import { BrandLogo } from "@/components/brand-logo"
 
@@ -86,7 +86,7 @@ const ADMIN_NAV: NavItem[] = [
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const { user, logout, isLoading } = useAuth()
+  const { user, logout: handleLogout, isLoading } = useAuth()
   const [showNav, setShowNav] = useState(true)
 
   const publicRoutes = useMemo(() => ["/", "/login", "/register", "/forgot-password"], [])
@@ -257,7 +257,9 @@ export function AppShell({ children }: AppShellProps) {
               ) : null}
               <DropdownMenuSeparator className="bg-slate-800" />
               <DropdownMenuItem
-                onClick={() => logout()}
+                onClick={async () => {
+                  await handleLogout()
+                }}
                 className="text-red-400 focus:text-red-400"
               >
                 Sign out

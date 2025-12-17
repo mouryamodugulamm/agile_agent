@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/clerk-auth-context"
 
 export default function ProfilePage() {
   const router = useRouter()
@@ -28,7 +28,6 @@ export default function ProfilePage() {
     user,
     isLoading,
     updateProfile,
-    resetPassword,
     refreshSession,
     logout,
   } = useAuth()
@@ -37,10 +36,7 @@ export default function ProfilePage() {
   const [company, setCompany] = useState("")
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
   const [darkModePreference, setDarkModePreference] = useState(true)
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
   const [profileMessage, setProfileMessage] = useState<string | null>(null)
-  const [passwordMessage, setPasswordMessage] = useState<string | null>(null)
   const [sessionMessage, setSessionMessage] = useState<string | null>(null)
 
   useEffect(() => {
@@ -64,8 +60,8 @@ export default function ProfilePage() {
     )
   }
 
-  const handleProfileSave = () => {
-    const result = updateProfile({ name, company })
+  const handleProfileSave = async () => {
+    const result = await updateProfile({ name, company })
     if (result.success) {
       setProfileMessage("Profile updated successfully.")
     } else {
@@ -73,34 +69,13 @@ export default function ProfilePage() {
     }
   }
 
-  const handlePasswordUpdate = () => {
-    if (password.trim().length < 8) {
-      setPasswordMessage("Password must be at least 8 characters long.")
-      return
-    }
-
-    if (password !== confirmPassword) {
-      setPasswordMessage("Passwords do not match.")
-      return
-    }
-
-    const result = resetPassword(user.email, password)
-    if (result.success) {
-      setPassword("")
-      setConfirmPassword("")
-      setPasswordMessage("Password updated successfully.")
-    } else {
-      setPasswordMessage(result.message ?? "Unable to update password.")
-    }
-  }
-
   const handleSessionRefresh = () => {
     refreshSession()
-    setSessionMessage("Sessions refreshed. Other devices will require a new login.")
+    setSessionMessage("Session refreshed.")
   }
 
-  const handleLogoutAll = () => {
-    logout()
+  const handleLogoutAll = async () => {
+    await logout()
     router.push("/login")
   }
 
@@ -220,48 +195,19 @@ export default function ProfilePage() {
               <CardHeader>
                 <CardTitle>Password</CardTitle>
                 <CardDescription className="text-slate-300">
-                  Update your password to keep your account secure.
+                  Password management is handled through Clerk. Use the "Forgot password?" link on the sign-in page to reset your password.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {passwordMessage ? (
-                  <Alert
-                    className="border-slate-700/60 bg-slate-800/40 text-slate-100"
-                    variant="default"
-                  >
-                    <AlertTitle>Status</AlertTitle>
-                    <AlertDescription>{passwordMessage}</AlertDescription>
-                  </Alert>
-                ) : null}
-                <div className="space-y-2">
-                  <Label htmlFor="new-password" className="text-slate-200">
-                    New password
-                  </Label>
-                  <Input
-                    id="new-password"
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    placeholder="Create a new password"
-                    className="border-slate-700/80 bg-slate-950/60 text-white placeholder:text-slate-400 focus-visible:ring-primary/70"
-                  />
+                <div className="rounded-lg border border-slate-800/70 bg-slate-950/40 p-4 text-sm text-slate-300">
+                  <p className="mb-2 font-medium text-white">To change your password:</p>
+                  <ol className="list-inside list-decimal space-y-1">
+                    <li>Sign out and go to the sign-in page</li>
+                    <li>Click "Forgot password?"</li>
+                    <li>Enter your email address</li>
+                    <li>Check your email for the reset link</li>
+                  </ol>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirm-password" className="text-slate-200">
-                    Confirm password
-                  </Label>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(event) => setConfirmPassword(event.target.value)}
-                    placeholder="Re-enter new password"
-                    className="border-slate-700/80 bg-slate-950/60 text-white placeholder:text-slate-400 focus-visible:ring-primary/70"
-                  />
-                </div>
-                <Button onClick={handlePasswordUpdate} className="w-full justify-center">
-                  Update password
-                </Button>
               </CardContent>
             </Card>
 
@@ -285,12 +231,7 @@ export default function ProfilePage() {
                 <div className="space-y-2 text-sm text-slate-300">
                   <p>
                     <span className="font-medium text-white">Current device:</span>{" "}
-                    Active session since{" "}
-                    {new Date(user.createdAt).toLocaleDateString(undefined, {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                    Active session
                   </p>
                   <p className="text-xs text-slate-400">
                     Refresh your tokens or sign out everywhere to secure your account if a device is lost.

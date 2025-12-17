@@ -20,7 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/clerk-auth-context"
 import type { UserRole } from "@/lib/auth-storage"
 import { BrandLogo } from "@/components/brand-logo"
 
@@ -358,10 +358,10 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wide text-slate-400">
-                    Member since
+                    Account
                   </p>
                   <p className="mt-1 text-base text-white">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                    Active member
                   </p>
                 </div>
               </CardContent>

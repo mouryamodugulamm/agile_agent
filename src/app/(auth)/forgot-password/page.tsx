@@ -2,15 +2,8 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { FormEvent, useState } from "react"
-import { ArrowRight, KeyRound } from "lucide-react"
+import { KeyRound } from "lucide-react"
 
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -19,146 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useAuth } from "@/contexts/auth-context"
+import { Button } from "@/components/ui/button"
 import { BrandLogo } from "@/components/brand-logo"
-
-type Step = "request" | "reset" | "done"
 
 export default function ForgotPasswordPage() {
   const router = useRouter()
-  const { listAccounts, resetPassword } = useAuth()
-
-  const [step, setStep] = useState<Step>("request")
-  const [email, setEmail] = useState("")
-  const [newPassword, setNewPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState<string | null>(null)
-
-  const handleEmailSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setError(null)
-
-    const matches = listAccounts().some(
-      (account) => account.email.trim().toLowerCase() === email.trim().toLowerCase()
-    )
-
-    if (!matches) {
-      setError("We couldn't find an account with that email address.")
-      return
-    }
-
-    setStep("reset")
-  }
-
-  const handlePasswordSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setError(null)
-
-    if (newPassword.length < 8) {
-      setError("Password must be at least 8 characters long.")
-      return
-    }
-
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.")
-      return
-    }
-
-    const result = resetPassword(email, newPassword)
-
-    if (!result.success) {
-      setError(result.message ?? "Unable to update password.")
-      return
-    }
-
-    setStep("done")
-  }
-
-  const renderContent = () => {
-    switch (step) {
-      case "request":
-        return (
-          <form className="space-y-5" onSubmit={handleEmailSubmit}>
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-slate-100">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@team.com"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="bg-slate-950/50 border-slate-700 text-white placeholder:text-slate-500"
-              />
-            </div>
-            <Button type="submit" className="w-full justify-center">
-              Continue
-              <ArrowRight className="ml-2 size-4" />
-            </Button>
-          </form>
-        )
-      case "reset":
-        return (
-          <form className="space-y-5" onSubmit={handlePasswordSubmit}>
-            <div className="space-y-2">
-              <Label htmlFor="new-password" className="text-slate-100">
-                New password
-              </Label>
-              <Input
-                id="new-password"
-                type="password"
-                placeholder="Create a new password"
-                autoComplete="new-password"
-                required
-                value={newPassword}
-                onChange={(event) => setNewPassword(event.target.value)}
-                className="bg-slate-950/50 border-slate-700 text-white placeholder:text-slate-500"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="confirm-password" className="text-slate-100">
-                Confirm password
-              </Label>
-              <Input
-                id="confirm-password"
-                type="password"
-                placeholder="Re-enter password"
-                autoComplete="new-password"
-                required
-                value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
-                className="bg-slate-950/50 border-slate-700 text-white placeholder:text-slate-500"
-              />
-            </div>
-            <Button type="submit" className="w-full justify-center">
-              Save new password
-              <ArrowRight className="ml-2 size-4" />
-            </Button>
-          </form>
-        )
-      case "done":
-        return (
-          <div className="space-y-5 text-center text-slate-200">
-            <p className="text-lg font-medium">Password updated</p>
-            <p className="text-sm text-slate-400">
-              You can now sign in with your new credentials.
-            </p>
-            <Button
-              className="w-full justify-center"
-              onClick={() => router.push("/login")}
-            >
-              Back to sign in
-              <ArrowRight className="ml-2 size-4" />
-            </Button>
-          </div>
-        )
-    }
-  }
 
   return (
     <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900">
@@ -175,31 +33,28 @@ export default function ForgotPasswordPage() {
                 Recover access
               </CardTitle>
               <CardDescription className="text-slate-100">
-                Confirm your email and choose a new password to get back into
-                your workspace.
+                Password reset is handled through Clerk. Please use the "Forgot password?" link on the sign-in page.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
-              {error ? (
-                <Alert
-                  variant="destructive"
-                  className="border-red-500/60 bg-red-500/10 text-red-100"
-                >
-                  <AlertTitle className="text-red-100">Action required</AlertTitle>
-                  <AlertDescription className="text-red-200">
-                    {error}
-                  </AlertDescription>
-                </Alert>
-              ) : null}
-              <div className="text-white">{renderContent()}</div>
+              <div className="rounded-lg border border-slate-800/70 bg-slate-950/40 p-4 text-sm text-slate-300">
+                <p className="mb-2 font-medium text-white">How to reset your password:</p>
+                <ol className="list-inside list-decimal space-y-1">
+                  <li>Go to the sign-in page</li>
+                  <li>Click "Forgot password?"</li>
+                  <li>Enter your email address</li>
+                  <li>Check your email for the reset link</li>
+                </ol>
+              </div>
             </CardContent>
             <CardFooter className="flex items-center justify-between text-sm text-white">
-              <Link
-                href="/login"
-                className="text-white underline-offset-2 hover:underline"
+              <Button
+                variant="outline"
+                className="border-slate-700/70 bg-slate-950/50 text-slate-200 hover:bg-slate-800/70"
+                onClick={() => router.push("/login")}
               >
                 Back to sign in
-              </Link>
+              </Button>
               <Link
                 href="/register"
                 className="text-white underline-offset-2 transition-colors hover:text-primary"
@@ -213,4 +68,3 @@ export default function ForgotPasswordPage() {
     </div>
   )
 }
-

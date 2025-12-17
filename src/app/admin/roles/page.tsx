@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/clerk-auth-context"
 import type { RoleAuditEntry, UserRole, UserStatus } from "@/lib/auth-storage"
 
 const ROLE_LABELS: Record<UserRole, string> = {
@@ -44,14 +44,14 @@ export default function RoleManagementPage() {
   const {
     user,
     isLoading,
-    listAccounts,
+    listAllUsers,
     updateAccountRole,
     updateAccountStatus,
     listRoleAuditEntries,
   } = useAuth()
 
-  const [users, setUsers] = useState(listAccounts())
-  const [auditEntries, setAuditEntries] = useState<RoleAuditEntry[]>(listRoleAuditEntries())
+  const [users, setUsers] = useState<Awaited<ReturnType<typeof listAllUsers>>>([])
+  const [auditEntries, setAuditEntries] = useState<RoleAuditEntry[]>([])
   const [filterText, setFilterText] = useState("")
   const [feedback, setFeedback] = useState<string | null>(null)
 
@@ -62,9 +62,15 @@ export default function RoleManagementPage() {
   }, [isLoading, user, router])
 
   useEffect(() => {
-    setUsers(listAccounts())
-    setAuditEntries(listRoleAuditEntries())
-  }, [listAccounts, listRoleAuditEntries])
+    const loadData = async () => {
+      const allUsers = await listAllUsers()
+      setUsers(allUsers)
+      setAuditEntries(listRoleAuditEntries())
+    }
+    if (user?.role === "admin") {
+      loadData()
+    }
+  }, [listAllUsers, listRoleAuditEntries, user])
 
   const filteredUsers = useMemo(() => {
     return users.filter((item) => {
@@ -104,22 +110,24 @@ export default function RoleManagementPage() {
     )
   }
 
-  const handleRoleChange = (userId: string, role: UserRole) => {
-    const result = updateAccountRole(userId, role)
+  const handleRoleChange = async (userId: string, role: UserRole) => {
+    const result = await updateAccountRole(userId, role)
     if (result.success) {
       setFeedback("Role updated successfully.")
-      setUsers(listAccounts())
+      const allUsers = await listAllUsers()
+      setUsers(allUsers)
       setAuditEntries(listRoleAuditEntries())
     } else {
       setFeedback(result.message ?? "Unable to update role.")
     }
   }
 
-  const handleStatusToggle = (userId: string, status: UserStatus) => {
-    const result = updateAccountStatus(userId, status)
+  const handleStatusToggle = async (userId: string, status: UserStatus) => {
+    const result = await updateAccountStatus(userId, status)
     if (result.success) {
       setFeedback(`Account ${status === "active" ? "enabled" : "disabled"} successfully.`)
-      setUsers(listAccounts())
+      const allUsers = await listAllUsers()
+      setUsers(allUsers)
       setAuditEntries(listRoleAuditEntries())
     } else {
       setFeedback(result.message ?? "Unable to update account status.")
@@ -186,8 +194,8 @@ export default function RoleManagementPage() {
                         </Label>
                         <Select
                           value={account.role}
-                          onValueChange={(value: UserRole) =>
-                            handleRoleChange(account.id, value)
+                          onValueChange={async (value: UserRole) =>
+                            await handleRoleChange(account.id, value)
                           }
                         >
                           <SelectTrigger className="w-44 border-slate-700/70 bg-slate-950/60 text-white">
@@ -212,8 +220,8 @@ export default function RoleManagementPage() {
                       <div className="flex items-center gap-2">
                         <Switch
                           checked={account.status === "active"}
-                          onCheckedChange={(checked) =>
-                            handleStatusToggle(account.id, checked ? "active" : "disabled")
+                          onCheckedChange={async (checked) =>
+                            await handleStatusToggle(account.id, checked ? "active" : "disabled")
                           }
                           className="data-[state=checked]:bg-primary"
                         />

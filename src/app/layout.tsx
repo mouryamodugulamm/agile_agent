@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { Geist_Mono, Manrope } from "next/font/google"
 import "./globals.css"
+import { ClerkProvider } from "@clerk/nextjs"
 
 import { AppShell } from "@/components/app-shell"
-import { AuthProvider } from "@/contexts/auth-context"
+import { ClerkAuthProvider } from "@/contexts/clerk-auth-context"
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -29,14 +30,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${manrope.variable} ${manrope.className} ${geistMono.variable} antialiased`}
-      >
-        <AuthProvider>
-          <AppShell>{children}</AppShell>
-        </AuthProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${manrope.variable} ${manrope.className} ${geistMono.variable} antialiased`}
+        >
+          <ClerkAuthProvider>
+            <AppShell>{children}</AppShell>
+          </ClerkAuthProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
