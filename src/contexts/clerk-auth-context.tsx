@@ -26,6 +26,7 @@ export type ClerkUser = {
   role: UserRole
   status: UserStatus
   imageUrl?: string
+  hasRoleSet?: boolean // Indicates if role was explicitly set in metadata
 }
 
 type AuthContextValue = {
@@ -69,14 +70,18 @@ export function ClerkAuthProvider({ children }: { children: ReactNode }) {
     const lastName = clerkUser.lastName || ""
     const name = `${firstName} ${lastName}`.trim() || email.split("@")[0]
 
+    const role = getUserRoleFromMetadata(clerkUser)
+    const hasRoleSet = clerkUser.publicMetadata?.role !== undefined
+
     return {
       id: clerkUser.id,
       email,
       name,
       company: (clerkUser.publicMetadata?.company as string) || undefined,
-      role: getUserRoleFromMetadata(clerkUser),
+      role,
       status: getUserStatusFromMetadata(clerkUser),
       imageUrl: clerkUser.imageUrl,
+      hasRoleSet,
     }
   }, [])
 

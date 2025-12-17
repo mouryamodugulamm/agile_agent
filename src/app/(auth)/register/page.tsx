@@ -35,7 +35,7 @@ export default function RegisterPage() {
             routing="path"
             path="/register"
             signInUrl="/login"
-            afterSignUpUrl="/"
+            afterSignUpUrl="/register/select-role"
           />
         </div>
       </div>

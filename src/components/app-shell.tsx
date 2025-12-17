@@ -103,15 +103,46 @@ export function AppShell({ children }: AppShellProps) {
       return
     }
 
+    // Redirect unauthenticated users to login
     if (!user && !isPublicRoute && pathname !== "/login") {
       router.replace("/login")
       return
     }
 
+    // Redirect authenticated users without a role to role selection
+    // Allow access to home page, MVP page, and role selection page
+    if (user) {
+      const isOnRoleSelection = pathname === "/register/select-role"
+      const isOnHome = pathname === "/"
+      const isOnMvp = pathname === "/mvp"
+      
+      // Check if user has a valid role - if they have any role, allow navigation
+      const hasValidRole = user.role && ["admin", "product-owner", "developer", "ai-agent"].includes(user.role)
+      
+      // Only redirect if user explicitly doesn't have a role set AND doesn't have a valid role
+      // Allow access to MVP page even without role (user can set role later)
+      if (user.hasRoleSet === false && !hasValidRole && !isOnRoleSelection && !isOnHome && !isOnMvp && !isPublicRoute) {
+        router.replace("/register/select-role")
+        return
+      }
+      
+      // If user has a role set but is on role selection page, redirect to MVP
+      if (user.hasRoleSet === true && isOnRoleSelection) {
+        router.replace("/mvp")
+        return
+      }
+      
+      // If user has a valid role (even if hasRoleSet is undefined), allow all navigation
+      // This allows users with default roles or roles set via other means to work
+    }
+
+    // Redirect authenticated users away from auth-only routes (login, register, etc.)
+    // But allow them to stay on role selection page
     if (
       user &&
       authOnlyRoutes.some((route) => pathname.startsWith(route)) &&
-      pathname !== "/"
+      pathname !== "/" &&
+      pathname !== "/register/select-role"
     ) {
       router.replace("/")
     }

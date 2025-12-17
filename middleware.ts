@@ -9,6 +9,11 @@ const isPublicRoute = createRouteMatcher([
   '/api/webhooks(.*)',
 ])
 
+// Routes that require authentication but are part of the auth flow
+const isAuthFlowRoute = createRouteMatcher([
+  '/register/select-role(.*)',
+])
+
 // Protected routes that require authentication
 const isProtectedRoute = createRouteMatcher([
   '/mvp(.*)',
@@ -23,6 +28,11 @@ const isProtectedRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, req) => {
   // Protect routes that require authentication
   if (isProtectedRoute(req)) {
+    await auth.protect()
+  }
+  
+  // Protect auth flow routes (like role selection) - require auth but allow access
+  if (isAuthFlowRoute(req)) {
     await auth.protect()
   }
 })
